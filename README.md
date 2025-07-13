@@ -1,4 +1,4 @@
-﻿# Braincode
+﻿#<img src="Braincode_Logo.png" width="64"> Braincode
 
 A modern web-based implementation of a classic color deduction puzzle game.
 
