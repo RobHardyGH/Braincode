@@ -4,7 +4,7 @@
     // ===========================================
 
     /**
-     * Available colors for the Mastermind game
+     * Available colors for the game
      * @type {string[]}
      */
     const COLORS = [
