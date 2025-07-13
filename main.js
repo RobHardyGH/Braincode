@@ -320,6 +320,8 @@
         rowEl.appendChild(feedbackEl);
 
         historyEl.appendChild(rowEl);
+
+        historyEl.scrollTop = historyEl.scrollHeight; // Scroll to bottom
     }
 
     /**

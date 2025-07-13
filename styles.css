@@ -11,6 +11,14 @@ body {
     background-color: #f4f4f4;
 }
 
+#footer {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 20px;
+}
+
 #game-container {
     width: 230px;
 }
@@ -61,7 +69,7 @@ button {
 }
 
 #history {
-    clear:both;
+    clear: both;
 }
 
 .guess-slots {
@@ -175,4 +183,10 @@ button {
 #close-popover-btn {
     background: #ccc;
     color: #333;
+}
+
+#footer {
+    position: fixed;
+    bottom: 10px;
+    left:0px;
 }
