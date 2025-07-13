@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Braincode</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="title">Braincode</h1>
+        <img if="main-logo" src="Braincode_Logo.png" width="64" />
+        <div id="history"></div>
+        <div id="current-row" class="row">
+            <div class="guess-slots">
+                <div class="slot" data-index="0"></div>
+                <div class="slot" data-index="1"></div>
+                <div class="slot" data-index="2"></div>
+                <div class="slot" data-index="3"></div>
+            </div>
+            <button id="guess-btn" disabled>Guess</button>
+            <button id="reset-btn">Reset</button>
+            <button id="results-btn">View Results</button>
+        </div>
+    </div>
+    <div id="results-popover" class="popover-overlay" style="display:none;">
+        <div class="popover-content">
+            <h2>Results</h2>
+            <div id="results-share"></div>
+            <button id="share-btn">Share</button>
+            <button id="close-popover-btn">Close</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
