@@ -189,7 +189,6 @@
         historyEl.innerHTML = "";
         guessBtn.disabled = true;
         guessBtn.style.display = "block";
-        resetBtn.style.display = "none";
         resultsBtn.style.display = "none";
         resetSlotColors();
     }
@@ -374,7 +373,6 @@
         if (black === WIN_CONDITION) {
             gameOver = true;
             guessBtn.style.display = "none";
-            resetBtn.style.display = "block";
             resultsBtn.style.display = "block";
 
             showResultsPopover();
@@ -434,6 +432,7 @@
 
         // Reset button handler
         resetBtn.addEventListener("click", () => {
+            hideResultsPopover();
             init();
         });
 
