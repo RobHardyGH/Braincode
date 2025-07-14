@@ -132,7 +132,7 @@
      * @returns {string} A random color string
      */
     function getRandomColor() {
-        return COLORS[ Math.floor(Math.random() * COLORS.length) ];
+        return COLORS[Math.floor(Math.random() * COLORS.length)];
     }
 
     /**
@@ -157,7 +157,7 @@
      * @returns {string} Formatted results string
      */
     function formatResultsForSharing(history) {
-        let shareText = `I solved the Braincode puzzle in ${ history.length } guesses!\r\n`;
+        let shareText = `I solved the Braincode puzzle in ${history.length} guesses!\r\n`;
 
         history.forEach((entry) => {
             shareText += `\r\n${evaluateSpecificGuess(entry.guess).result}`;
@@ -200,13 +200,13 @@
     function cycleColor(index) {
         if (gameOver) return;
 
-        const currentColor = currentGuess[ index ];
+        const currentColor = currentGuess[index];
         const nextColor = currentColor === null
-            ? COLORS[ 0 ]
-            : COLORS[ (COLORS.indexOf(currentColor) + 1) % COLORS.length ];
+            ? COLORS[0]
+            : COLORS[(COLORS.indexOf(currentColor) + 1) % COLORS.length];
 
-        currentGuess[ index ] = nextColor;
-        currentRowSlots[ index ].style.backgroundColor = nextColor;
+        currentGuess[index] = nextColor;
+        currentRowSlots[index].style.backgroundColor = nextColor;
 
         validateGuessBtn();
     }
@@ -223,7 +223,7 @@
      * @returns {{black: number, white: number}} Feedback with black (correct position) and white (correct color, wrong position) pegs
      */
     function evaluateCurrentGuess() {
-        const guessCopy = [ ...currentGuess ];
+        const guessCopy = [...currentGuess];
         const result = evaluateSpecificGuess(guessCopy);
         return {
             black: result.black,
@@ -234,35 +234,34 @@
     /**
      * Evaluate the given guess against the secret combination
      * @param {string[]} guess - The player's guess
-     * @return {{black: number, white: number, result: string}} - The evaluation result with counts of black and white pegs and the resuklt string
-     * */
+     * @return {{black: number, white: number, result: string}} - The evaluation result with counts of black and white pegs and the result string
+     */
     function evaluateSpecificGuess(guess) {
-        const secretCopy = [ ...secret ];
-        const resultChars = [ guess.length ];
-        const guessCopy = [ ...guess ];
+        const secretCopy = [...secret];
+        const resultChars = [guess.length];
+        const guessCopy = [...guess];
 
         // First pass: count exact matches (black pegs)
         let black = 0;
         for (let i = 0; i < GUESS_LENGTH; i++) {
-            if (guessCopy[ i ] === secretCopy[ i ]) {
+            if (guessCopy[i] === secretCopy[i]) {
                 black++;
-                resultChars[ i ] = `⬛`; // Correct position
-                guessCopy[i] = secretCopy[ i ] = null; // Mark as used
+                resultChars[i] = `⬛`; // Correct position
+                guessCopy[i] = secretCopy[i] = null; // Mark as used
             }
         }
 
         // Second pass: count color matches in wrong positions (white pegs)
         let white = 0;
         for (let i = 0; i < GUESS_LENGTH; i++) {
-            if (guessCopy[ i ] !== null) {
-                const matchIndex = secretCopy.indexOf(guessCopy[ i ]);
+            if (guessCopy[i] !== null) {
+                const matchIndex = secretCopy.indexOf(guessCopy[i]);
                 if (matchIndex !== -1) {
                     white++;
-                    resultChars[ i ] = `⬜`; // Correct color, wrong position
-                    secretCopy[ matchIndex ] = null; // Mark as used
-                }
-                else {
-                    resultChars[ i ] = `✖️`; // Incorrect color
+                    resultChars[i] = `⬜`; // Correct color, wrong position
+                    secretCopy[matchIndex] = null; // Mark as used
+                } else {
+                    resultChars[i] = `✖️`; // Incorrect color
                 }
             }
         }
@@ -330,6 +329,7 @@
         resultsPopover.style.display = "block";
         resultsShare.textContent = '';
         resultsShare.textContent = formatResultsForSharing(guessHistory);
+        showConfetti(resultsPopover);
     }
 
     /**
@@ -337,6 +337,38 @@
      */
     function hideResultsPopover() {
         resultsPopover.style.display = "none";
+    }
+
+    /**
+     * Creates confetti elements and displays them
+     * @param {HTMLElement} target - The target element to display confetti
+     */
+    function showConfetti(target) {
+        // Remove any existing confetti
+        const old = target.querySelector('.confetti');
+        if (old) old.remove();
+
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+
+        const colors = ['#ff5e62', '#ffb700', '#7afcff', '#fffbe7', '#ffe3ec', '#b2ff59', '#ff4081'];
+        const numConfetti = 32;
+
+        for (let i = 0; i < numConfetti; i++) {
+            const piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.left = `${Math.random() * 95}%`;
+            piece.style.animationDelay = `${Math.random() * 0.7}s`;
+            piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+            confetti.appendChild(piece);
+        }
+        target.appendChild(confetti);
+
+        // Remove confetti after animation
+        setTimeout(() => {
+            confetti.remove();
+        }, 2000);
     }
 
     // ===========================================
@@ -352,7 +384,7 @@
         const { black, white } = evaluateCurrentGuess();
 
         // Store the guess before resetting
-        const completedGuess = [ ...currentGuess ];
+        const completedGuess = [...currentGuess];
 
         // Add to history display
         addHistoryRow(black, white);
