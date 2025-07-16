@@ -1,4 +1,5 @@
-﻿* {
+﻿/* ==== ELEMENTS ==== */
+* {
     box-sizing: border-box;
 }
 
@@ -12,63 +13,19 @@ body {
     min-width: 320px;
 }
 
-#footer {
-    width: 100%;
-    text-align: center;
-    font-size: 0.8em;
-    color: #666;
-    margin-top: 20px;
-}
-
-#game-container {
-    width: 230px;
-}
-
 h1 {
     text-align: center;
-}
-
-.row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
 }
 
 button {
     cursor: pointer;
 }
 
-#guess-btn,
-#results-btn {
-    padding: 8px 12px;
-    margin-left: 8px;
-}
-
-#guess-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-#results-btn {
-    display: none;
-}
-
-#results-btn {
-    height: 35px;
-    line-height: 11px;
-    padding-top: 5px;
-}
-
-#main-logo  {
-    float:left;
-}
-
-#title {
-    float:right;
-}
-
-#history {
-    clear: both;
+/* ==== CLASSES ==== */
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 .guess-slots {
@@ -110,33 +67,31 @@ button {
     margin-top: 12px;
 }
 
-#results-popover {
+.popover-content {
+    /* Merged duplicate styles */
+    background: linear-gradient(135deg, #fffbe7 0%, #ffe3ec 100%);
+    border-radius: 12px;
+    border: 3px solid #ffb700;
+    box-shadow: 0 8px 32px rgba(255, 183, 0, 0.25), 0 4px 24px rgba(0,0,0,0.2), 0 2px 16px rgba(0,0,0,0.2);
+    animation: pop-in 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    text-align: center;
+    padding: 2em;
+    min-width: 260px;
+    width: 90%;
+    margin: 40px auto auto auto;
+}
+
+.popover-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8); /* Opaque dark overlay */
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    min-width:100%;
-}
-
-.popover-content {
-    background: linear-gradient(135deg, #fffbe7 0%, #ffe3ec 100%);
-    border-radius: 12px;
-    border: 3px solid #ffb700;
-    box-shadow: 0 8px 32px rgba(255, 183, 0, 0.25), 0 4px 24px rgba(0,0,0,0.2);
-    animation: pop-in 0.7s cubic-bezier(.68,-0.55,.27,1.55);
-    text-align: center;
-}
-
-@keyframes pop-in {
-    0% { transform: scale(0.7); opacity: 0; }
-    80% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); }
 }
 
 .confetti {
@@ -159,18 +114,64 @@ button {
     animation: confetti-fall 1.8s linear forwards;
 }
 
-@keyframes confetti-fall {
-    0% {
-        transform: translateY(-40px) rotateZ(0deg);
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(640px) rotateZ(360deg);
-        opacity: 0;
-    }
+/* ==== IDS ==== */
+#footer {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 20px;
+    position: fixed;
+    bottom: 10px;
+    left: 0px;
+}
+
+#game-container {
+    width: 230px;
+}
+
+#guess-btn,
+#results-btn {
+    padding: 8px 12px;
+    margin-left: 8px;
+}
+
+#guess-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#results-btn {
+    display: none;
+    height: 35px;
+    line-height: 11px;
+    padding-top: 5px;
+}
+
+#main-logo  {
+    float: left;
+}
+
+#title {
+    float: right;
+}
+
+#history {
+    clear: both;
+}
+
+#results-popover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8); /* Opaque dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    min-width: 100%;
 }
 
 #results-popover h2, #results .message, #results .congrats {
@@ -191,35 +192,6 @@ button {
     pointer-events: none;
 }
 
-@keyframes sparkle {
-    0% { opacity: 0.7; transform: scale(1) rotate(-10deg);}
-    100% { opacity: 1; transform: scale(1.2) rotate(10deg);}
-}
-
-.popover-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.popover-content {
-    background: #fff;
-    padding: 2em;
-    border-radius: 10px;
-    min-width: 260px;
-    width: 90%;
-    margin: 40px auto auto auto;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-    text-align: center;
-}
-
 #results-share {
     font-size: 1.5em;
     margin: 1em 0;
@@ -237,19 +209,8 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    line-height:20px;
+    line-height: 20px;
     width: 30%;
-}
-
-@media (max-width:500px) {
-
-    /* your conditional / responsive CSS inside this condition */
-    #share-btn,
-    #close-popover-btn,
-    #reset-btn {
-        width: 100%;
-        margin-top: 5px;
-    }
 }
 
 #share-btn {
@@ -258,12 +219,47 @@ button {
 }
 
 #close-popover-btn {
-    background: #ccc;
+    background: #aea;
     color: #333;
 }
 
-#footer {
-    position: fixed;
-    bottom: 10px;
-    left:0px;
+#reset-btn {
+    background: #ffb700;
+    color: #333;
+}
+
+/* ==== MEDIA QUERIES ==== */
+@media (max-width:500px) {
+    #share-btn,
+    #close-popover-btn,
+    #reset-btn {
+        width: 100%;
+        margin-top: 5px;
+    }
+}
+
+/* ==== KEYFRAMES ==== */
+@keyframes pop-in {
+    0% { transform: scale(0.7); opacity: 0; }
+    80% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-40px) rotateZ(0deg);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(640px) rotateZ(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes sparkle {
+    0% { opacity: 0.7; transform: scale(1) rotate(-10deg);}
+    100% { opacity: 1; transform: scale(1.2) rotate(10deg);}
 }
