@@ -157,11 +157,13 @@
      * @returns {string} Formatted results string
      */
     function formatResultsForSharing(history) {
-        let shareText = `I solved the Braincode puzzle in ${history.length} guesses!\r\n`;
+        let shareText = `I solved the Braincode\r\npuzzle in ${history.length} guesses!\r\n`;
 
         history.forEach((entry) => {
             shareText += `\r\n${evaluateSpecificGuess(entry.guess).result}`;
         });
+
+        shareText += `\r\nhttp://braincodeapp.site`
 
         return shareText;
     }
