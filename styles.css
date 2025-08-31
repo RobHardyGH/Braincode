@@ -213,6 +213,10 @@ button {
     width: 30%;
 }
 
+#reset-btn {
+    display: none;
+}
+
 #share-btn {
     background: #007bff;
     color: #fff;

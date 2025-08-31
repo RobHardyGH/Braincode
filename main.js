@@ -261,13 +261,23 @@
         resetSlotColors();
 
         // Render loaded history
+        let hasWon = false;
         if (guessHistory.length > 0) {
             guessHistory.forEach(entry => {
                 currentGuess = entry.guess;
                 addHistoryRow(entry.black, entry.white);
+                if (entry.black === WIN_CONDITION) {
+                    hasWon = true;
+                }
             });
             resetCurrentGuess();
             resetSlotColors();
+        }
+        if (hasWon) {
+            gameOver = true;
+            guessBtn.style.display = "none";
+            resultsBtn.style.display = "block";
+            showResultsPopover();
         }
     }
 
