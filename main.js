@@ -168,6 +168,36 @@
         return shareText;
     }
 
+    /**
+     * Generates a deterministic hash from a string
+     * @param {string} str
+     * @returns {number}
+     */
+    function hashString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) - hash) + str.charCodeAt(i);
+            hash |= 0; // Convert to 32bit integer
+        }
+        return Math.abs(hash);
+    }
+
+    /**
+     * Generates the secret code based on the current date
+     * @returns {string[]}
+     */
+    function getDailySecret() {
+        const today = new Date();
+        const dateStr = today.toISOString().slice(0, 10); // YYYY-MM-DD
+        let hash = hashString(dateStr);
+        const secretArr = [];
+        for (let i = 0; i < GUESS_LENGTH; i++) {
+            secretArr.push(COLORS[hash % COLORS.length]);
+            hash = Math.floor(hash / COLORS.length) || hashString(hash + dateStr + i);
+        }
+        return secretArr;
+    }
+
     // ===========================================
     // GAME LOGIC FUNCTIONS
     // ===========================================
@@ -176,8 +206,8 @@
      * Initializes a new game by generating a secret and resetting all state
      */
     function init() {
-        // Generate secret combination
-        secret = Array.from({ length: GUESS_LENGTH }, () => getRandomColor());
+        // Generate secret combination based on date
+        secret = getDailySecret();
 
         // Debug logging (remove in production)
         console.log("Secret:", secret);
