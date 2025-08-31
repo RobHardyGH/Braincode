@@ -198,6 +198,40 @@
         return secretArr;
     }
 
+    /**
+     * Gets the current date string in YYYY-MM-DD format
+     * @returns {string}
+     */
+    function getTodayString() {
+        return new Date().toISOString().slice(0, 10);
+    }
+
+    /**
+     * Loads guess history from localStorage for today
+     * @returns {Array<{guess: string[], black: number, white: number}>}
+     */
+    function loadHistoryFromStorage() {
+        const key = getTodayString();
+        const data = localStorage.getItem(key);
+        if (data) {
+            try {
+                return JSON.parse(data);
+            } catch {
+                return [];
+            }
+        }
+        return [];
+    }
+
+    /**
+     * Saves guess history to localStorage for today
+     * @param {Array<{guess: string[], black: number, white: number}>} history
+     */
+    function saveHistoryToStorage(history) {
+        const key = getTodayString();
+        localStorage.setItem(key, JSON.stringify(history));
+    }
+
     // ===========================================
     // GAME LOGIC FUNCTIONS
     // ===========================================
@@ -212,10 +246,12 @@
         // Debug logging (remove in production)
         console.log("Secret:", secret);
 
+        // Load history from localStorage
+        guessHistory = loadHistoryFromStorage();
+
         // Reset game state
         resetCurrentGuess();
         gameOver = false;
-        guessHistory = [];
 
         // Reset UI elements
         historyEl.innerHTML = "";
@@ -223,6 +259,16 @@
         guessBtn.style.display = "block";
         resultsBtn.style.display = "none";
         resetSlotColors();
+
+        // Render loaded history
+        if (guessHistory.length > 0) {
+            guessHistory.forEach(entry => {
+                currentGuess = entry.guess;
+                addHistoryRow(entry.black, entry.white);
+            });
+            resetCurrentGuess();
+            resetSlotColors();
+        }
     }
 
     /**
@@ -427,6 +473,9 @@
             black,
             white
         });
+
+        // Save history to localStorage
+        saveHistoryToStorage(guessHistory);
 
         // Reset current guess UI
         resetCurrentGuess();
