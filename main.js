@@ -123,6 +123,19 @@
      */
     const resultsBtn = document.getElementById("results-btn");
 
+    const dateStr = getTodayString();
+
+    /**
+     * Friendly date string for display
+     * formatted as "Month Day Year"
+     * like "Sep 1st 2025"
+     */
+    const friendlyDateStr = new Date(dateStr).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+    });
+
     // ===========================================
     // UTILITY FUNCTIONS
     // ===========================================
@@ -157,13 +170,15 @@
      * @returns {string} Formatted results string
      */
     function formatResultsForSharing(history) {
-        let shareText = `I solved the Braincode\r\npuzzle in ${history.length} guesses!\r\n`;
+        let shareText = `I solved the Braincode\r\n`;
+            shareText += `puzzle for ${friendlyDateStr}\r\n`;
+            shareText += `in ${history.length} guesses!\r\n`;
 
         history.forEach((entry) => {
             shareText += `\r\n${evaluateSpecificGuess(entry.guess).result}`;
         });
 
-        shareText += `\r\nhttp://braincodeapp.site`
+        shareText += `\r\n\r\nhttp://braincodeapp.site`
 
         return shareText;
     }
@@ -187,8 +202,7 @@
      * @returns {string[]}
      */
     function getDailySecret() {
-        const today = new Date();
-        const dateStr = today.toISOString().slice(0, 10); // YYYY-MM-DD
+    
         let hash = hashString(dateStr);
         const secretArr = [];
         for (let i = 0; i < GUESS_LENGTH; i++) {
@@ -211,8 +225,7 @@
      * @returns {Array<{guess: string[], black: number, white: number}>}
      */
     function loadHistoryFromStorage() {
-        const key = getTodayString();
-        const data = localStorage.getItem(key);
+        const data = localStorage.getItem(dateStr);
         if (data) {
             try {
                 return JSON.parse(data);
@@ -228,8 +241,7 @@
      * @param {Array<{guess: string[], black: number, white: number}>} history
      */
     function saveHistoryToStorage(history) {
-        const key = getTodayString();
-        localStorage.setItem(key, JSON.stringify(history));
+        localStorage.setItem(dateStr, JSON.stringify(history));
     }
 
     // ===========================================
